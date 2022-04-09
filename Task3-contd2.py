@@ -140,7 +140,7 @@ def join_names():
 join_names()
 #%%
 
-#function to split the names now got from the citation into family and given names 
+#function to get the index of each claims/authors in P50 and P2093, use the index to get the names then split the names now got from the citation into family and given names 
 
 def split():
     listt = match_citation_names()
@@ -164,7 +164,7 @@ def add_qualifiernames(data_item):
     site = pywikibot.Site("wikidata", "wikidata")
     repo = site.data_repository()
     
-    listt = match_citation_names()
+    listt = join_names()
     dateCre = split() 
     #print(listt)
     for te, tea in zip(listt, dateCre):
