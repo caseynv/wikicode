@@ -170,16 +170,20 @@ def add_qualifiernames(data_item):
     for te, tea in zip(listt, dateCre):
         
         if listt.index(te) == dateCre.index(tea):
-        
-            qualifier = pywikibot.Claim(repo, u'P9688')
-            qualifier.setTarget(tea[0])
-            te.addQualifier(qualifier, summary=u'Adding a qualifier.')
-            print('New Qualifier for P9688!')
+            if 'P9688' not in te.qualifiers:
+                qualifier = pywikibot.Claim(repo, u'P9688')
+                qualifier.setTarget(tea[0])
+                te.addQualifier(qualifier, summary=u'Adding a qualifier.')
+                print('New Qualifier for P9688!')
+            else:
+                print('There is already a P9688 qualifier!')
             
-            
-            qualifier = pywikibot.Claim(repo, u'P9687')
-            qualifier.setTarget(tea[1])
-            te.addQualifier(qualifier, summary=u'Adding a qualifier.')
-            print('New Qualifier for P9687!')
-
+            if 'P9687' not in te.qualifiers:
+                qualifier = pywikibot.Claim(repo, u'P9687')
+                qualifier.setTarget(tea[1])
+                te.addQualifier(qualifier, summary=u'Adding a qualifier.')
+                print('New Qualifier for P9687!')
+            else:
+                print('There is already a P9687 qualifier!')
+                
 add_qualifiernames('Q56603084')
