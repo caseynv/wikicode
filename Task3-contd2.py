@@ -152,7 +152,7 @@ def split():
         x1 = re.split(", ", authors_list)
         
         pli2.append(x1)
-    print(pli2)
+    return pli2
     
 split()
 #%%
