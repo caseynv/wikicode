@@ -140,16 +140,6 @@ def author_citation(url):
 author_citation('https://ui.adsabs.harvard.edu/abs/2018ApJ...852...97H/exportcitation')
 
 #%%
-#This function adds the statedin qualifier if not present
-
-
-#def extract_names():
-    #b = citation('https://ui.adsabs.harvard.edu/abs/2018ApJ...852...97H/exportcitation')
-    
-    #u = [b[int(i) - 1] for i in a]
-    #return u 
-#extract_names()
-#%%
 #This function matches the name sof the authors in the citation to their cordinal no
 
 def author_match():
@@ -163,7 +153,6 @@ author_match()
 
 #%%
 #This function adds the author string name to a list
-
 
 def print_authorstring(list_item):
     ti = []
@@ -198,7 +187,7 @@ def joined():
 joined()
 
 #%%
-#This function adds matches the names in the ikidata and citation 
+#This function adds matches the names in the wikidata and citation 
 
 def match_alt():
     left = author_match()
