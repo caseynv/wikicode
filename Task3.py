@@ -20,13 +20,13 @@ def print_authorname(list_item):
     i_list = []
     for data_item in list_item:
         item = pywikibot.ItemPage(repo, data_item) 
-        item_dict = item.get()
+        #item_dict = item.get()
     
-        for claim in item_dict['claims']: # Loop through items
-            if claim == 'P50':
-                for source in item.claims[claim]:
+        for source in item.claims['P50']:
+            tt = list(source.qualifiers.items())
+            for key, value in tt:
+                if key == 'P1545':
                     QID = source.target.getID()
-                
                     item1 = pywikibot.ItemPage(repo, QID) 
                     item_dict1 = item1.get()
                     try:
@@ -42,7 +42,6 @@ def print_authorname(list_item):
                                     QID2 = pywikibot.ItemPage(repo, itemm1) 
                                     name1 = QID2.get()
                                     m_list = name['labels']['en'] + ', ' + name1['labels']['en']
-                                   
                                     i_list.append(m_list)
                             except:
                                 print('No Family name')
@@ -51,8 +50,8 @@ def print_authorname(list_item):
                     
                     
     return i_list
-                    
-print_authorname(['Q56603084'])
+
+print_authorname(['Q56603082'])
 
 #%%
 #function to get the cordinal number of author strings p2093
@@ -65,18 +64,17 @@ def print_authorstring_info(list_item):
     o_list = []
     for data_item in list_item:
         item = pywikibot.ItemPage(repo, data_item) 
-        item_dict = item.get()
+        #item_dict = item.get()
     
-        for claim in item_dict['claims']: # Loop through items
-            if claim == 'P2093':
-                
-                for source in item.claims[claim]:
-                        
-                    stat = list(source.qualifiers.items())
+        for sourc in item.claims['P2093']:
+            stat = list(sourc.qualifiers.items())
                     
-                    for key, value in stat:
-                        num = value[0].getTarget()
-                        o_list.append(num)
+            for keyy, valuee in stat:
+                if keyy == 'P1545':
+                    num = valuee[0].getTarget()
+                    o_list.append(num)
+                    
+                
     return o_list
                     
 print_authorstring_info(['Q56603084'])
@@ -145,10 +143,10 @@ author_citation('https://ui.adsabs.harvard.edu/abs/2018ApJ...852...97H/exportcit
 def author_match():
     stated = all_authors()
     authorname = author_citation('https://ui.adsabs.harvard.edu/abs/2018ApJ...852...97H/exportcitation')
-    for r in stated:
-        num_r = int(r)
-        new_list = [authorname[int(i) - 1] for i in stated]
-        return new_list
+    #for r in stated:
+        #num_r = int(r)
+    new_list = [authorname[int(i) - 1] for i in stated]
+    return new_list
 author_match()
 
 #%%
@@ -227,19 +225,28 @@ def join_names():
     
     site = pywikibot.Site("wikidata", "wikidata")
     repo = site.data_repository()
-    item = pywikibot.ItemPage(repo, 'Q56603084') 
+    item = pywikibot.ItemPage(repo, 'Q56603082') 
     item_dict = item.get()
     
     pli = []
     pli1 = []
-    for claim in item_dict['claims']['P50']: # Loop through items
-            pli.append(claim)
-            
-    for t_claim in item_dict['claims']['P2093']: # Loop through items
-            pli1.append(t_claim)
-            
-            joined = pli1 + pli
-   
+         
+    if 'P50' in item_dict['claims']:
+        for sourcee in item.claims['P50']:
+            tt = list(sourcee.qualifiers.items())
+            for key, value in tt:
+                if key == 'P1545':
+                    #no1 = value[0].getTarget()
+                    pli.append(sourcee)
+    else:
+        pli = []
+    if 'P2093' in item_dict['claims']:
+        for claim in item_dict['claims']['P2093']: 
+            pli1.append(claim)
+    else:
+        pli1 = []
+        
+    joined = pli1 + pli
     return joined
 
 join_names()
