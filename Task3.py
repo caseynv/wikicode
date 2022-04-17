@@ -11,14 +11,14 @@ enwiki_repo = enwiki.data_repository()
 
 #%%
 #function to print the authors name p50
-def print_authorname(list_item):
+def print_authorname(item):
     site = pywikibot.Site("wikidata", "wikidata")
     repo = site.data_repository()
     
     i_list = []
-    item = pywikibot.ItemPage(repo, list_item) 
+    iteme = pywikibot.ItemPage(repo, item) 
     
-    for source in item.claims['P50']:
+    for source in iteme.claims['P50']:
         tt = list(source.qualifiers.items())
         for key, value in tt:
             if key == 'P1545':
@@ -51,14 +51,14 @@ print_authorname('Q56603082')
 #%%
 #function to get the cordinal number of author strings p2093
 
-def print_authorstring_info(list_item):
+def print_authorstring_info(item):
     site = pywikibot.Site("wikidata", "wikidata")
     repo = site.data_repository()
     
     o_list = []
-    item = pywikibot.ItemPage(repo, list_item) 
+    iteme = pywikibot.ItemPage(repo, item) 
     
-    for sourc in item.claims['P2093']:
+    for sourc in iteme.claims['P2093']:
         stat = list(sourc.qualifiers.items())
                     
         for keyy, valuee in stat:
@@ -72,17 +72,17 @@ print_authorstring_info('Q56603084')
 
 #%%
 #function to get the cordinal number of authors p50
-def print_author_info(list_item):
+def print_author_info(item):
     site = pywikibot.Site("wikidata", "wikidata")
     repo = site.data_repository()
     
     q = []
-    item = pywikibot.ItemPage(repo, list_item) 
-    item_dict = item.get()
+    iteme = pywikibot.ItemPage(repo, item) 
+    item_dict = iteme.get()
     
     for claim in item_dict['claims']: # Loop through items
         if claim == 'P50':
-            for source in item.claims[claim]:
+            for source in iteme.claims[claim]:
                     
                 tt = list(source.qualifiers.items())
                 for key, value in tt:
@@ -137,17 +137,17 @@ author_match('https://ui.adsabs.harvard.edu/abs/2018ApJ...852...97H/exportcitati
 #%%
 #This function adds the author string name to a list
 
-def print_authorstring(list_item):
+def print_authorstring(item):
     ti = []
     site = pywikibot.Site("wikidata", "wikidata")
     repo = site.data_repository()
-    item = pywikibot.ItemPage(repo, list_item) 
-    item_dict = item.get()
+    iteme = pywikibot.ItemPage(repo, item) 
+    item_dict = iteme.get()
     
     for claim in item_dict['claims']: # Loop through items
         if claim == 'P2093':
             try:
-                for source in item.claims[claim]:
+                for source in iteme.claims[claim]:
                     QID = source.target
                     ti.append(QID)
                         
@@ -205,18 +205,18 @@ authorname_seperated('Q56603084')
 #%%
 #This function adds the claims in P2093 and P50-useful to add qualifiers
 
-def join_names(list_item):
+def join_names(item):
     
     site = pywikibot.Site("wikidata", "wikidata")
     repo = site.data_repository()
-    item = pywikibot.ItemPage(repo, list_item) 
-    item_dict = item.get()
+    iteme = pywikibot.ItemPage(repo, item) 
+    item_dict = iteme.get()
     
     pli = []
     pli1 = []
          
     if 'P50' in item_dict['claims']:
-        for sourcee in item.claims['P50']:
+        for sourcee in iteme.claims['P50']:
             tt = list(sourcee.qualifiers.items())
             for key, value in tt:
                 if key == 'P1545':
@@ -270,14 +270,14 @@ add_namesqualifier()
 #%%
 #This function ensures the claim without a series ordinal is not included 
 
-def print_claim1(list_item):
+def print_claim1(item):
     
     site = pywikibot.Site("wikidata", "wikidata")
     repo = site.data_repository()
     
     state = []
-    item = pywikibot.ItemPage(repo, list_item) 
-    item_dict = item.get()
+    iteme = pywikibot.ItemPage(repo, item) 
+    item_dict = iteme.get()
     
     for claim in item_dict['claims']['P50']: # Loop through items
         nu = claim.qualifiers.items()
@@ -292,16 +292,16 @@ print_claim1('Q56603084')
 #%%
 #This function adds the statedin qualifier if not present
 
-def add_statedqualifier(list_item, url):
+def add_statedqualifier(item, url):
     
     site = pywikibot.Site("wikidata", "wikidata")
     repo = site.data_repository()
-    neu = print_author_info(list_item)
-    claim_list = print_claim1(list_item)
+    neu = print_author_info(item)
+    claim_list = print_claim1(item)
     names = author_citation(url)
     
-    item = pywikibot.ItemPage(repo, list_item) 
-    item_dict = item.get()
+    iteme = pywikibot.ItemPage(repo, item) 
+    item_dict = iteme.get()
     
     for claim in item_dict['claims']['P50']: # Loop through items
         claim_list.append(claim)
